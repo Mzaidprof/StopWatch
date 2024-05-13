@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>StopWatch</title>
+    <link rel="stylesheet" href="style.css" />
+    <link rel="icon" href="images/stopwatch-solid.svg" type="favicon" />
+  </head>
+  <body>
+    <div class="stopwatch">
+        <h2 title="Reload page">Stopwatch</h2>
+      <h1 id="displayTime">00 : 00 : 00 : 00</h1>
+      <div class="buttons">
+        <img title="Reset" src="images/reset.png" onclick="watchReset()" />
+        <img title="Start" src="images/start.png" onclick="watchStart()"/>
+        <img title="Stop" src="images/stop.png" onclick="watchStop()" />
+      </div>
+    </div>
+    <footer>
+        <div><p>&copf;Mohammed Zaid. All rights reserved</p></div>
+    </footer>
+    <script>
+        let [hours, minutes, seconds, milliseconds] = [0,0,0,0];
+        displayTime = document.getElementById("displayTime");
+        let timer = null;
+
+        function stopWatch(){
+            milliseconds++;
+            if(milliseconds == 100){
+                milliseconds = 0;
+                seconds++;
+                if(seconds == 60){
+                    seconds = 0;
+                    minutes++;
+                    if(minutes == 60){
+                        minutes = 0;
+                        hours++;
+                    }
+                }
+            }
+            let h = hours < 10 ? "0" + hours : hours;
+            let m = minutes < 10 ? "0" + minutes : minutes;
+            let s = seconds < 10 ? "0" + seconds : seconds;
+            let ms = milliseconds < 10 ? "0" + milliseconds : milliseconds;
+            displayTime.innerHTML = h + " : " + m + " : " + s + " : " + ms;
+        }
+
+        function watchStart(){
+            if(timer != null){
+                clearInterval(timer);
+            }
+            timer = setInterval(stopWatch,10);
+        }
+        
+        function watchStop(){
+            clearInterval(timer);
+        }
+        
+        function watchReset(){
+            [hours, minutes, seconds] = [0,0,0,0];
+            displayTime.innerHTML = "00 : 00 : 00 : 00";
+            clearInterval(timer);
+        }
+    </script>
+  </body>
+</html>
